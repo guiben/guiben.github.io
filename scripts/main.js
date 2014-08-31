@@ -17,10 +17,10 @@ function loaded(){
 
   var updatebuttons = function(enable, disable){
     enable.map(function(e){
-      e.style.borderBottom = "solid 1px rgb(207, 58, 140)";
+      e.className = "enabled_button";
     });
     disable.map(function(e){
-      e.style.borderBottom = "";
+      e.className = "disabled_button";
     });
   };
 
@@ -33,8 +33,10 @@ function loaded(){
     toggle([homecontent], [cvcontent]);
     updatebuttons([homebutton], [cvbutton]);
   });
-  cvcontent.style.display = "none";
-  homebutton.style.borderBottom = "solid 1px rgb(207, 58, 140)";
+  if(document.body.offsetWidth >= 640){
+    cvcontent.style.display = "none";
+  }
+  homebutton.className = "enabled_button";
 }
 
 document.addEventListener('DOMContentLoaded', loaded, false);

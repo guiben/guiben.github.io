@@ -1,0 +1,71 @@
+box-shadow()
+  -webkit-box-shadow arguments
+  -moz-box-shadow arguments
+  box-shadow arguments
+
+body
+  padding 0
+  margin 0
+  background rgb(240, 240, 240)
+  font-family "Open Sans", Helvetica, sans-serif
+
+.menu
+  background rgb(255, 255, 255)
+  a
+    font-family "Roboto", Helvetica, sans-serif
+    text-decoration none
+    color rgb(64, 64, 64)
+    text-transform uppercase
+  @media (max-width: 640px)
+    display none
+  @media (min-width: 640px)
+    ul
+      list-style-type none
+    li
+      width 100%
+    position fixed
+    top 0
+    left 0
+    width 15%
+    height 5%
+    font-size 80%
+    box-shadow 0 0 5px black
+    height 100%
+
+.enabled_button
+  border-right 2px solid black
+
+.disabled_button
+  border-right none
+
+.container
+  background rgb(255, 255, 255)
+  margin-left auto
+  margin-right auto
+  @media (max-width: 640px)
+    width 98%
+    h1
+      text-align center
+  @media (min-width: 640px)
+    width 74%
+    float right 
+    margin-left auto
+    margin-right 2%
+    margin-top 5%
+    padding 2%
+
+.footer
+  text-align center
+  font-size xx-small
+
+.header
+  font-family "Righteous"
+  font-size xx-large
+  box-shadow 0 0 5px black
+  text-align center
+
+.color0
+  border-left 2px solid #2aa198
+
+.color1
+  border-left 2px solid #dc322f

@@ -1,0 +1,87 @@
+body {
+  padding: 0;
+  margin: 0;
+  background: #f0f0f0;
+  font-family: "Open Sans", Helvetica, sans-serif;
+}
+.menu {
+  background: #fff;
+}
+.menu a {
+  font-family: "Roboto", Helvetica, sans-serif;
+  text-decoration: none;
+  color: #404040;
+  text-transform: uppercase;
+}
+@media (max-width: 640px) {
+  .menu {
+    display: none;
+  }
+}
+@media (min-width: 640px) {
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: 5%;
+    font-size: 80%;
+    -webkit-box-shadow: 0 0 5px #000;
+    -moz-box-shadow: 0 0 5px #000;
+    box-shadow: 0 0 5px #000;
+    height: 100%;
+  }
+  .menu ul {
+    list-style-type: none;
+  }
+  .menu li {
+    width: 100%;
+  }
+}
+.enabled_button {
+  border-right: 2px solid #000;
+}
+.disabled_button {
+  border-right: none;
+}
+.container {
+  background: #fff;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 640px) {
+  .container {
+    width: 98%;
+  }
+  .container h1 {
+    text-align: center;
+  }
+}
+@media (min-width: 640px) {
+  .container {
+    width: 74%;
+    float: right;
+    margin-left: auto;
+    margin-right: 2%;
+    margin-top: 5%;
+    padding: 2%;
+  }
+}
+.footer {
+  text-align: center;
+  font-size: xx-small;
+}
+.header {
+  font-family: "Righteous";
+  font-size: xx-large;
+  -webkit-box-shadow: 0 0 5px #000;
+  -moz-box-shadow: 0 0 5px #000;
+  box-shadow: 0 0 5px #000;
+  text-align: center;
+}
+.color0 {
+  border-left: 2px solid #2aa198;
+}
+.color1 {
+  border-left: 2px solid #dc322f;
+}
