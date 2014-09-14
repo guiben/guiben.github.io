@@ -85,3 +85,10 @@ body {
 .color1 {
   border-left: 2px solid #dc322f;
 }
+.bold {
+  font-weight: bold;
+  display: inline;
+}
+.italic {
+  font-style: italic;
+}
