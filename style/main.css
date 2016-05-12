@@ -1,60 +1,43 @@
 body {
   padding: 0;
   margin: 0;
-  background: #f2e5bc;
-  font-family: "Open Sans", Helvetica, sans-serif;
+  background: #241d12;
+  font-family: Fira Mono, "Open Sans", Helvetica, sans-serif;
+  background-image: url("scanline.png");
+  background-repeat: repeat;
+  background-position: fixed;
 }
-
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
 .container {
-  background: #fbf1c7;
+  color: #ba6c00;
+  text-shadow: 0px 0px 10px rgba(186,108,0,0.5);
+  margin: 2%;
   margin-left: auto;
   margin-right: auto;
+  width: 70%;
+  padding: 2%;
+  border: 2px solid #ba6c00;
+  box-shadow: inset 0px 0px 10px rgba(186,108,0,0.5), 0px 0px 10px rgba(186,108,0,0.5);
 }
-
-@media (max-width: 640px) {
-  .container {
-    width: 98%;
-  }
-  .container h1 {
-    text-align: center;
-  }
+li {
+  list-style: none;
+  display: block;
+  padding: 1%;
+  margin: 1%;
+  border-left: 2px solid #ba6c00;
+  background-image: url("scanline.png");
+  background-repeat: repeat;
+  background-position: fixed;
 }
-
-@media (min-width: 640px) {
-  .container {
-    width: 74%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5%;
-    margin-bottom: 5%;
-    padding: 2%;
-  }
-}
-
-.header {
-  font-family: "Righteous";
-  font-size: xx-large;
-  text-align: center;
-	color: #928374;
-}
-
-.color0 {
-  border-left: 2px solid #98971a;
-}
-
-.color1 {
-  border-left: 2px solid #cc241d;
-}
-
-.color2 {
-  border-left: 2px solid #458588;
-}
-
 .bold {
   font-weight: bold;
   display: inline;
 }
-
 .italic {
   font-style: italic;
 }
