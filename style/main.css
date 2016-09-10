@@ -1,40 +1,116 @@
 body {
   padding: 0;
   margin: 0;
-  background: #241d12;
-  font-family: Fira Mono, "Open Sans", Helvetica, sans-serif;
-  background-image: url("scanline.png");
-  background-repeat: repeat;
+  background: #252525;
+  color: #00ff95;
+  font-family: Helvetica, sans-serif;
   background-position: fixed;
 }
-.right {
+ul {
+  padding: 0;
+}
+.bold,
+.highlight {
+  font-weight: bold;
+  display: inline;
+}
+.italic {
+  font-style: italic;
+}
+.right,
+.entry .location {
   text-align: right;
 }
-.center {
+.font0,
+.header-title,
+.header-subtitle,
+.header-content,
+.category-title,
+.entry .date,
+.entry .sum-up {
+  font-family: Martel Sans;
+}
+.font1,
+.entry .description,
+.entry .domain,
+.entry .location {
+  font-family: Noto Sans;
+}
+.color0,
+.header-title,
+.category-title {
+  color: #00ff95;
+}
+.color1,
+.header-content,
+.entry .sum-up,
+.entry .description,
+.entry .domain,
+.entry .location {
+  color: #fff;
+}
+.color2,
+.header-subtitle {
+  color: #4d4d4d;
+}
+.color3 {
+  color: #6322e5;
+}
+.color4,
+.highlight,
+.entry .date {
+  color: #8d8d8d;
+}
+.center,
+.header-title,
+.header-subtitle,
+.header-content,
+.entry .sum-up {
   text-align: center;
 }
+.content,
+.entry .description,
+.entry .domain,
+.entry .location {
+  font-size: 14px;
+}
+.progress-bar {
+  display: inline-block;
+  width: 100%;
+  background: #4d4d4d;
+  height: 2px;
+}
+.progress-bar .progress-value {
+  background: #00ff95;
+  height: inherit;
+}
+.entry .sum-up {
+  font-weight: bold;
+}
 .container {
-  color: #ba6c00;
-  text-shadow: 0px 0px 10px rgba(186,108,0,0.5);
+  color: #fff;
+  background: #252525;
+  box-shadow: 0px 0px 32px #1b1b1b;
   margin: 2%;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
   padding: 2%;
-  border: 2px solid #ba6c00;
-  box-shadow: inset 0px 0px 10px rgba(186,108,0,0.5), 0px 0px 10px rgba(186,108,0,0.5);
+  border: 2px solid $fg;
+}
+@media screen and (min-width: 1080px) {
+  .container {
+    width: 42%;
+  }
+}
+@media screen and (max-width: 1080px) {
+  .container {
+    width: 73%;
+  }
 }
 li {
   list-style: none;
   display: block;
   padding: 1%;
   margin: 1%;
-  border-left: 2px solid #ba6c00;
-}
-.bold {
-  font-weight: bold;
-  display: inline;
-}
-.italic {
-  font-style: italic;
+  border-left: 2px solid $fg;
 }

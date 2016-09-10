@@ -1,39 +1,20 @@
-$fg = #ba6c00
-$bg = #241d12
-$glow = 0.5
+$fg0 = #00ff95
+$fg1 = #ffffff
+$fg2 = #4d4d4d
+$fg3 = #6322e5
+$fg4 = #8d8d8d
+$bg = #252525
 
 body
   padding 0
   margin 0
   background $bg
-  font-family Fira Mono, "Open Sans", Helvetica, sans-serif
-  background-image url('scanline.png')
-  background-repeat repeat
+  color $fg0
+  font-family Helvetica, sans-serif
   background-position fixed
 
-.right
-  text-align right
-
-.center
-  text-align center
-
-.container
-  color $fg
-  text-shadow 0px 0px 10px alpha($fg, $glow)
-  margin 2%
-  margin-left auto
-  margin-right auto
-  width 70%
-  padding 2%
-  border 2px solid $fg
-  box-shadow inset 0px 0px 10px alpha($fg, $glow), 0px 0px 10px alpha($fg, $glow)
-
-li
-  list-style none
-  display block
-  padding 1%
-  margin 1%
-  border-left 2px solid $fg
+ul
+  padding 0
 
 .bold
   font-weight bold
@@ -41,3 +22,92 @@ li
 
 .italic
   font-style italic
+
+.right
+  text-align right
+
+.font0
+  font-family Martel Sans
+
+.font1
+  font-family Noto Sans
+
+.color0
+  color $fg0
+
+.color1
+  color $fg1
+
+.color2
+  color $fg2
+
+.color3
+  color $fg3
+
+.color4
+  color $fg4
+
+.center
+  text-align center
+
+.header-title
+  @extends .center, .color0, .font0
+
+.header-subtitle
+  @extends .center, .color2, .font0
+
+.header-content
+  @extends .center, .color1, .font0
+
+.category-title
+  @extends .color0, .font0
+
+.content
+  font-size 14px
+
+.highlight
+  @extends .color4, .bold
+
+.progress-bar
+  display inline-block
+  width 100%
+  background $fg2
+  height 2px
+
+  .progress-value
+    background $fg0
+    height inherit
+
+.entry
+  .date
+    @extends .color4, .font0
+  .sum-up
+    @extends .color1, .font0, .center
+    font-weight bold
+  .description
+    @extends .color1, .font1, .content
+  .domain
+    @extends .color1, .font1, .content
+  .location
+    @extends .color1, .font1, .right, .content
+
+.container
+  color $fg1
+  background $bg
+  box-shadow 0px 0px 32px ($bg - 10)
+  margin 2%
+  margin-left auto
+  margin-right auto
+  @media screen and (min-width: 1080px)
+    width 42%
+  @media screen and (max-width: 1080px)
+    width 73%
+  padding 2%
+  border 2px solid $fg
+
+li
+  list-style none
+  display block
+  padding 1%
+  margin 1%
+  border-left 2px solid $fg
