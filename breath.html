@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cardiac Coherence</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #6eb5ff;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 5s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .text {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #6eb5ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #4a90e2;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .time-selector {
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background-color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Cardiac Coherence</h1>
+
+        <div id="breathingCircle" class="breathing-circle"></div>
+
+        <div id="breathText" class="text">Ready</div>
+
+        <div class="controls">
+            <button id="startButton">Start</button>
+            <button id="stopButton">Stop</button>
+        </div>
+
+        <div class="time-selector">
+            <select id="timeSelect">
+                <option value="1">1 minute</option>
+                <option value="3">3 minutes</option>
+                <option value="5" selected>5 minutes</option>
+                <option value="10">10 minutes</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        // Set up audio context for sound synthesis
+        let audioContext;
+        let inhaleOscillator, exhaleOscillator;
+        let inhaleGain, exhaleGain;
+
+        function initAudio() {
+            // Create audio context on user interaction to comply with autoplay policies
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            // Create gain nodes for fade in/out
+            inhaleGain = audioContext.createGain();
+            exhaleGain = audioContext.createGain();
+
+            inhaleGain.gain.value = 0;
+            exhaleGain.gain.value = 0;
+
+            inhaleGain.connect(audioContext.destination);
+            exhaleGain.connect(audioContext.destination);
+        }
+
+        function createTibetanBowlSound(frequency, gainNode) {
+            // Create oscillator
+            const oscillator = audioContext.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.value = frequency;
+
+            // Connect to gain node
+            oscillator.connect(gainNode);
+
+            // Start oscillator
+            oscillator.start();
+
+            return oscillator;
+        }
+
+        function playInhaleSound() {
+            // Clean up previous oscillator if exists
+            if (inhaleOscillator) {
+                inhaleOscillator.stop();
+                inhaleOscillator.disconnect();
+            }
+
+            // Create new oscillator for inhale sound (higher frequency)
+            inhaleOscillator = createTibetanBowlSound(432, inhaleGain);
+
+            // Fade in
+            inhaleGain.gain.cancelScheduledValues(audioContext.currentTime);
+            inhaleGain.gain.setValueAtTime(0, audioContext.currentTime);
+            inhaleGain.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.5);
+
+            // Fade out
+            inhaleGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + INHALE_TIME / 1000);
+        }
+
+        function playExhaleSound() {
+            // Clean up previous oscillator if exists
+            if (exhaleOscillator) {
+                exhaleOscillator.stop();
+                exhaleOscillator.disconnect();
+            }
+
+            // Create new oscillator for exhale sound (lower frequency)
+            exhaleOscillator = createTibetanBowlSound(256, exhaleGain);
+
+            // Fade in
+            exhaleGain.gain.cancelScheduledValues(audioContext.currentTime);
+            exhaleGain.gain.setValueAtTime(0, audioContext.currentTime);
+            exhaleGain.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.5);
+
+            // Fade out
+            exhaleGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + EXHALE_TIME / 1000);
+        }
+
+        function stopSounds() {
+            if (inhaleOscillator) {
+                inhaleGain.gain.cancelScheduledValues(audioContext.currentTime);
+                inhaleGain.gain.setValueAtTime(inhaleGain.gain.value, audioContext.currentTime);
+                inhaleGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
+
+                setTimeout(() => {
+                    inhaleOscillator.stop();
+                    inhaleOscillator.disconnect();
+                    inhaleOscillator = null;
+                }, 500);
+            }
+
+            if (exhaleOscillator) {
+                exhaleGain.gain.cancelScheduledValues(audioContext.currentTime);
+                exhaleGain.gain.setValueAtTime(exhaleGain.gain.value, audioContext.currentTime);
+                exhaleGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
+
+                setTimeout(() => {
+                    exhaleOscillator.stop();
+                    exhaleOscillator.disconnect();
+                    exhaleOscillator = null;
+                }, 500);
+            }
+        }
+
+        // DOM Elements
+        const breathingCircle = document.getElementById('breathingCircle');
+        const breathText = document.getElementById('breathText');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const timeSelect = document.getElementById('timeSelect');
+
+        // Variables
+        let isRunning = false;
+        let timer = null;
+        let currentPhase = null;
+        let counter = 0;
+        let totalTime = 3; // Default 3 minutes
+
+        // Constants for breathing cycle (in milliseconds)
+        const INHALE_TIME = 5000;
+        const EXHALE_TIME = 5000;
+        const CYCLE_TIME = INHALE_TIME + EXHALE_TIME;
+
+        // Functions
+        function startBreathing() {
+            if (isRunning) return;
+
+            // Initialize audio on first interaction
+            if (!audioContext) {
+                initAudio();
+            }
+
+            isRunning = true;
+            totalTime = parseInt(timeSelect.value);
+            counter = 0;
+
+            // Calculate total cycles based on selected time
+            const totalCycles = (totalTime * 60000) / CYCLE_TIME;
+
+            runBreathingCycle();
+
+            timer = setInterval(() => {
+                counter++;
+                if (counter >= totalCycles) {
+                    stopBreathing();
+                    breathText.textContent = "Complete";
+                    breathingCircle.style.transform = "scale(1)";
+                }
+            }, CYCLE_TIME);
+        }
+
+        function runBreathingCycle() {
+            // Inhale Phase
+            currentPhase = "inhale";
+            breathText.textContent = "Inhale";
+            breathingCircle.style.transform = "scale(1.2)";
+            playInhaleSound();
+
+            setTimeout(() => {
+                if (!isRunning) return;
+
+                // Exhale Phase
+                currentPhase = "exhale";
+                breathText.textContent = "Exhale";
+                breathingCircle.style.transform = "scale(0.8)";
+                playExhaleSound();
+
+                setTimeout(() => {
+                    if (isRunning) {
+                        runBreathingCycle();
+                    }
+                }, EXHALE_TIME);
+
+            }, INHALE_TIME);
+        }
+
+        function stopBreathing() {
+            isRunning = false;
+            clearInterval(timer);
+            breathText.textContent = "Ready";
+            breathingCircle.style.transform = "scale(1)";
+            currentPhase = null;
+            stopSounds();
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', startBreathing);
+        stopButton.addEventListener('click', stopBreathing);
+
+        // iOS requires user interaction to initialize audio
+        document.body.addEventListener('touchstart', function () {
+            if (!audioContext) {
+                initAudio();
+            }
+        }, {once: true});
+    </script>
+</body>
+
+</html>
